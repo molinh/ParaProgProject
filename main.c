@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
   
   // Allocate
   if (mpi_my_rank==0) {
-    global_size = NRow*NRow*NRow;
+    global_size = NRow*NRow*NRow/2;
   }
   
   MPI_Bcast(&global_size, 1, MPI_UNSIGNED_LONG, 0, MPI_COMM_WORLD);
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
   if (mpi_my_rank == 0) {
     for (int x=-NRow/2; x<NRow/2; ++x)
       for (int y=-NRow/2; y<NRow/2; ++y)
-        for (int z=-NRow/2; z<NRow/2; ++z) {
+        for (int z=-NRow/2; z<NRow/2; z+=2) {
           double *p = global_position + DIMENSION*inited;
           p[0] = x+0.5;
           p[1] = y+0.5;
